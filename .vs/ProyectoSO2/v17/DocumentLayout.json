@@ -7,16 +7,20 @@
       "RelativeMoniker": "D:0:0:{36C88321-67EF-40E0-A2AB-569B13B5CD2C}|ProyectoSO2\\ProyectoSO2.csproj|solutionrelative:proyectoso2\\frmsimulacion.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
+      "AbsoluteMoniker": "D:0:0:{36C88321-67EF-40E0-A2AB-569B13B5CD2C}|ProyectoSO2\\ProyectoSO2.csproj|D:\\Documentos\\2024 Universidad\\Sistemas Operativos II\\Unidad III\\ProyectoSO2\\proyectoso2\\frmsimulacion.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{36C88321-67EF-40E0-A2AB-569B13B5CD2C}|ProyectoSO2\\ProyectoSO2.csproj|solutionrelative:proyectoso2\\frmsimulacion.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{36C88321-67EF-40E0-A2AB-569B13B5CD2C}|ProyectoSO2\\ProyectoSO2.csproj|D:\\Documentos\\2024 Universidad\\Sistemas Operativos II\\Unidad III\\ProyectoSO2\\proyectoso2\\gestor.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{36C88321-67EF-40E0-A2AB-569B13B5CD2C}|ProyectoSO2\\ProyectoSO2.csproj|solutionrelative:proyectoso2\\gestor.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{36C88321-67EF-40E0-A2AB-569B13B5CD2C}|ProyectoSO2\\ProyectoSO2.csproj|D:\\Documentos\\2024 Universidad\\Sistemas Operativos II\\Unidad III\\ProyectoSO2\\proyectoso2\\proceso.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{36C88321-67EF-40E0-A2AB-569B13B5CD2C}|ProyectoSO2\\ProyectoSO2.csproj|solutionrelative:proyectoso2\\proceso.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{36C88321-67EF-40E0-A2AB-569B13B5CD2C}|ProyectoSO2\\ProyectoSO2.csproj|D:\\Documentos\\2024 Universidad\\Sistemas Operativos II\\Unidad III\\ProyectoSO2\\proyectoso2\\particion.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{36C88321-67EF-40E0-A2AB-569B13B5CD2C}|ProyectoSO2\\ProyectoSO2.csproj|solutionrelative:proyectoso2\\particion.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{36C88321-67EF-40E0-A2AB-569B13B5CD2C}|ProyectoSO2\\ProyectoSO2.csproj|D:\\Documentos\\2024 Universidad\\Sistemas Operativos II\\Unidad III\\ProyectoSO2\\proyectoso2\\gestor.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{36C88321-67EF-40E0-A2AB-569B13B5CD2C}|ProyectoSO2\\ProyectoSO2.csproj|solutionrelative:proyectoso2\\gestor.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -30,42 +34,39 @@
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 3,
               "Title": "Proceso.cs",
               "DocumentMoniker": "D:\\Documentos\\2024 Universidad\\Sistemas Operativos II\\Unidad III\\ProyectoSO2\\ProyectoSO2\\Proceso.cs",
               "RelativeDocumentMoniker": "ProyectoSO2\\Proceso.cs",
               "ToolTip": "D:\\Documentos\\2024 Universidad\\Sistemas Operativos II\\Unidad III\\ProyectoSO2\\ProyectoSO2\\Proceso.cs",
               "RelativeToolTip": "ProyectoSO2\\Proceso.cs",
-              "ViewState": "AQIAABAAAAAAAAAAAAAqwBoAAAAMAAAA",
+              "ViewState": "AQIAABIAAAAAAAAAAAAUwBoAAAAMAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-03-29T18:41:41.003Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-03-29T18:41:41.003Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 4,
               "Title": "Particion.cs",
               "DocumentMoniker": "D:\\Documentos\\2024 Universidad\\Sistemas Operativos II\\Unidad III\\ProyectoSO2\\ProyectoSO2\\Particion.cs",
               "RelativeDocumentMoniker": "ProyectoSO2\\Particion.cs",
               "ToolTip": "D:\\Documentos\\2024 Universidad\\Sistemas Operativos II\\Unidad III\\ProyectoSO2\\ProyectoSO2\\Particion.cs",
               "RelativeToolTip": "ProyectoSO2\\Particion.cs",
-              "ViewState": "AQIAAAUAAAAAAAAAAAAAABMAAAAMAAAA",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABMAAAAMAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-03-29T18:41:39.613Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-03-29T18:41:39.613Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 2,
               "Title": "Gestor.cs",
               "DocumentMoniker": "D:\\Documentos\\2024 Universidad\\Sistemas Operativos II\\Unidad III\\ProyectoSO2\\ProyectoSO2\\Gestor.cs",
               "RelativeDocumentMoniker": "ProyectoSO2\\Gestor.cs",
               "ToolTip": "D:\\Documentos\\2024 Universidad\\Sistemas Operativos II\\Unidad III\\ProyectoSO2\\ProyectoSO2\\Gestor.cs",
               "RelativeToolTip": "ProyectoSO2\\Gestor.cs",
-              "ViewState": "AQIAABoAAAAAAAAAAAAqwCkAAAAQAAAA",
+              "ViewState": "AQIAAHsAAAAAAAAAAAAqwIUAAAAIAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-03-29T18:26:35.253Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-03-29T18:26:35.253Z"
             },
             {
               "$type": "Document",
@@ -75,10 +76,22 @@
               "RelativeDocumentMoniker": "ProyectoSO2\\frmSimulacion.cs",
               "ToolTip": "D:\\Documentos\\2024 Universidad\\Sistemas Operativos II\\Unidad III\\ProyectoSO2\\ProyectoSO2\\frmSimulacion.cs",
               "RelativeToolTip": "ProyectoSO2\\frmSimulacion.cs",
-              "ViewState": "AQIAAEUAAAAAAAAAAAAUwFQAAAANAAAA",
+              "ViewState": "AQIAAMUAAAAAzszMzMwmwNQAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-03-13T00:29:47.453Z",
               "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "frmSimulacion.cs [Dise\u00F1o]",
+              "DocumentMoniker": "D:\\Documentos\\2024 Universidad\\Sistemas Operativos II\\Unidad III\\ProyectoSO2\\ProyectoSO2\\frmSimulacion.cs",
+              "RelativeDocumentMoniker": "ProyectoSO2\\frmSimulacion.cs",
+              "ToolTip": "D:\\Documentos\\2024 Universidad\\Sistemas Operativos II\\Unidad III\\ProyectoSO2\\ProyectoSO2\\frmSimulacion.cs [Dise\u00F1o]",
+              "RelativeToolTip": "ProyectoSO2\\frmSimulacion.cs [Dise\u00F1o]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-04-03T00:41:54.019Z",
+              "EditorCaption": " [Dise\u00F1o]"
             }
           ]
         }

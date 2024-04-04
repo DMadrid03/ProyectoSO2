@@ -23,6 +23,7 @@ namespace ProyectoSO2
         int max;
         Random random;
         List<Particion> particionesList;
+        List<Proceso> procesosList;
         Gestor gestor;
         public frmSimulacion(DataRow fila, DataTable tbPart)
         {
@@ -90,32 +91,11 @@ namespace ProyectoSO2
                 fila["Tiempo Transcurrido"] = 0;
 
                 tabProcesos.Rows.Add(fila);
+                AsignarProcesoAParticion(1,"prueba");
             }
             
         }
-        private bool validarProceso()
-        {
-            DataRow f = tabProcesos.NewRow();
-            f = tabProcesos.Rows[tabProcesos.Rows.Count - 1];
-
-
-            if (f["Nombre"].ToString().Length == 0 || f["Memoria Requerida"].ToString().Length == 0)
-            {//verificar que al proceso anterior no le falten datos y que el tamaño no sea mayor que la partición más grande
-                MessageBox.Show("Complete los datos del último proceso antes de agregar otro", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return false;
-            }
-            actualizarGestor();//reinicializar el gestor con los procesos agregados
-            //hasta el momento (para que el procesosList esté actualizado)
-            Particion p = gestor.particionMasGrande();
-            if (int.Parse(f["Memoria Requerida"].ToString()) > p.size)
-            {
-                MessageBox.Show("El proceso requiere demasiada memoria y no podrá ser ejecutado","Error",MessageBoxButtons.OK,MessageBoxIcon.Error);
-                dgvProcesos.CurrentRow.Cells[3].Value = p.size;
-                MessageBox.Show("Tamaño corregido al máximo permitido","Información",MessageBoxButtons.OK,MessageBoxIcon.Information);
-                return false;
-            }
-            return true;
-        }
+       
 
         private void dgvProcesos_CellValidating(object sender, DataGridViewCellValidatingEventArgs e)
         {
@@ -165,37 +145,37 @@ namespace ProyectoSO2
             // Crear y agregar las particiones al FlowLayoutPanel
             for (int i = 0; i < particiones; i++)
             {
-                
                 FlowLayoutPanel particion = new FlowLayoutPanel();
-                particion.BackColor = System.Drawing.Color.Green;
+                particion.BackColor = Color.Green;
                 particion.BorderStyle = BorderStyle.FixedSingle;
                 particion.Height = flowLayoutPanelMemoria.Height; // Mismo alto que el FlowLayoutPanel principal
                 particion.Name = "particion_" + i;
+
                 // Ajustar el ancho de la última partición para ocupar el espacio restante
                 if (i == particiones - 1)
                 {
                     anchoParticion += anchoRestante;
                 }
-
                 particion.Width = anchoParticion;
-
 
                 // Crear y configurar el label
                 Label lblInfoParticion = new Label();
-                lblInfoParticion.Text = "Particion " + i + "\nTamaño = " + tabParticiones.Rows[0][1];                
+                lblInfoParticion.Text = "Particion " + i; // Texto por defecto
                 lblInfoParticion.AutoSize = false;
                 lblInfoParticion.TextAlign = ContentAlignment.MiddleCenter;
                 lblInfoParticion.Dock = DockStyle.Fill; // Para que se expanda y se centre dentro del FlowLayoutPanel
-                lblInfoParticion.Font = new Font(lblInfoParticion.Font.FontFamily, 50, FontStyle.Bold);
-                lblInfoParticion.Visible = true;
+
                 // Agregar el label a la partición
                 particion.Controls.Add(lblInfoParticion);
-                
+                particion.CreateControl();
                 
 
                 // Agregar la partición al FlowLayoutPanel
-                flowLayoutPanelMemoria.Controls.Add(particion);
-            }          
+                flowLayoutPanelMemoria.Controls.Add(particion);                
+                flowLayoutPanelMemoria.Refresh();
+                particion.Refresh();
+                flowLayoutPanelMemoria.Controls[0].Controls[0].BringToFront();
+            }
         }
 
         private void RecalcularAnchoParticiones()
@@ -209,7 +189,20 @@ namespace ProyectoSO2
                 particion.Width = anchoParticion;
             }
         }
+        private void AsignarProcesoAParticion(int indiceParticion, string nombreProceso)
+        {
+            if (indiceParticion >= 0 && indiceParticion < flowLayoutPanelMemoria.Controls.Count)
+            {
+                // Obtener la partición correspondiente
+                FlowLayoutPanel particion = (FlowLayoutPanel)flowLayoutPanelMemoria.Controls[indiceParticion];
 
+                // Obtener el label de la partición
+                Label lblInfoParticion = (Label)particion.Controls[0]; // El label es el primer control de la partición
+
+                // Asignar el nombre del proceso al label
+                lblInfoParticion.Text = nombreProceso;
+            }
+        }
         private void flowLayoutPanelMemoria_ControlAdded(object sender, ControlEventArgs e)
         {
             // Verificar si todos los controles han sido agregados
@@ -226,27 +219,83 @@ namespace ProyectoSO2
             }
         }
 
+        private int procesosNoVacios()
+        {
+            bool procesosVacios = false;
+            //verificar que los datos que el usuario debe ingresar no estén vacíos            
+
+            foreach (DataRow row in tabProcesos.Rows)
+            {
+                if (row["Nombre"].ToString().Length== 0 || row["Memoria requerida"].ToString().Length == 0)                
+                    return -1;//significa que faltan datos
+
+                if (int.Parse(row["Memoria requerida"].ToString()) == 0)
+                    return -2;
+            }
+            return 0;
+        }
+        private bool validarProceso()
+        {
+            DataRow f = tabProcesos.NewRow();
+            f = tabProcesos.Rows[tabProcesos.Rows.Count - 1];
+
+
+            if (f["Nombre"].ToString().Length == 0 || f["Memoria Requerida"].ToString().Length == 0)
+            {//verificar que al proceso anterior no le falten datos y que el tamaño no sea mayor que la partición más grande
+                MessageBox.Show("Complete los datos del último proceso antes de agregar otro", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return false;
+            }
+            actualizarGestor();//reinicializar el gestor con los procesos agregados
+            //hasta el momento (para que el procesosList esté actualizado)
+            Particion p = gestor.particionMasGrande();///REVISAAAARRR FUNCION PARTICION MAS GRANDE
+            if (int.Parse(f["Memoria Requerida"].ToString()) > p.size)
+            {
+                MessageBox.Show("El proceso requiere demasiada memoria y no podrá ser ejecutado", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                dgvProcesos.CurrentRow.Cells[3].Value = p.size;
+                MessageBox.Show("Tamaño corregido al máximo permitido", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return false;
+            }
+            return true;
+        }
         private void btnIniciar_Click(object sender, EventArgs e)
         {
-            actualizarGestor();
-            
-
-            if(gestor.verificarProcesoSaliente() || gestor.particionesLibres() > 0)
+            if (procesosNoVacios() == -1)
             {
-                if (filaInfo["Politica"].Equals("Primer Ajuste"))
+                MessageBox.Show("Faltan datos de los procesos", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            if (procesosNoVacios() == -2)
+            {
+                MessageBox.Show("La cantidad de memoria requerida de un proceso no puede ser cero", "Error con la memoria requerida", MessageBoxButtons.OK, MessageBoxIcon.Stop);
+            }
+            else
+            {
+                if (validarProceso())
                 {
-                    gestor.firstFit();
-                }
-                else
-                {
-                    gestor.BestFit();
+                    actualizarGestor();
+
+                    if (gestor.verificarProcesoSaliente() || gestor.particionesLibres() > 0)
+                    {
+                        if (filaInfo["Politica"].Equals("Primer Ajuste"))
+                        {
+                            gestor.firstFit();
+                        }
+                        else
+                        {
+                            gestor.BestFit();
+                        }
+                    }
+
+
+                    btnAgregar.Visible = false;
+                    btnIniciar.Visible = false;
+                    //btnDetener.Visible = true;
+                    gestor.particionesLibres();
+                    particionesList = gestor.ParticionesList;
+                    procesosList = gestor.ProcesosList;
                 }
             }
-
-            btnAgregar.Visible = false;
-            btnIniciar.Visible = false;
-            //btnDetener.Visible = true;
-            
+                
 
         }
     }

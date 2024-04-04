@@ -28,13 +28,13 @@
         /// </summary>
         private void InitializeComponent()
         {
-            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
             dgvProcesos = new DataGridView();
             btnAgregar = new Button();
             label1 = new Label();
             label2 = new Label();
             btnIniciar = new Button();
-            flowLayoutPanelMemoria = new FlowLayoutPanel();
+            flowLayoutPanelMemoria = new Panel();
             ((System.ComponentModel.ISupportInitialize)dgvProcesos).BeginInit();
             SuspendLayout();
             // 
@@ -42,9 +42,9 @@
             // 
             dgvProcesos.AllowUserToAddRows = false;
             dgvProcesos.AllowUserToDeleteRows = false;
-            dataGridViewCellStyle1.BackColor = Color.FromArgb(192, 192, 255);
-            dataGridViewCellStyle1.Font = new Font("Nirmala UI", 8.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            dgvProcesos.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle2.BackColor = Color.FromArgb(192, 192, 255);
+            dataGridViewCellStyle2.Font = new Font("Nirmala UI", 8.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            dgvProcesos.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle2;
             dgvProcesos.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dgvProcesos.GridColor = SystemColors.InactiveCaption;
             dgvProcesos.Location = new Point(26, 57);
@@ -97,11 +97,10 @@
             // 
             // flowLayoutPanelMemoria
             // 
-            flowLayoutPanelMemoria.Location = new Point(26, 271);
+            flowLayoutPanelMemoria.Location = new Point(49, 283);
             flowLayoutPanelMemoria.Name = "flowLayoutPanelMemoria";
-            flowLayoutPanelMemoria.Size = new Size(765, 265);
+            flowLayoutPanelMemoria.Size = new Size(726, 271);
             flowLayoutPanelMemoria.TabIndex = 6;
-            flowLayoutPanelMemoria.ControlAdded += flowLayoutPanelMemoria_ControlAdded;
             // 
             // frmSimulacion
             // 
@@ -128,6 +127,6 @@
         private Label label1;
         private Label label2;
         private Button btnIniciar;
-        private FlowLayoutPanel flowLayoutPanelMemoria;
+        private Panel flowLayoutPanelMemoria;
     }
 }

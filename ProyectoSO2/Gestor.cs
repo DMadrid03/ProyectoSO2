@@ -153,11 +153,12 @@ namespace entornoPruebaClasesProyecto
         {
             
             int size=0,index=0;
-            for(int i = 0;i<ParticionesList.Count-1;i++)
+            for (int i = 0; i < ParticionesList.Count ; i++)
             {
                 if (ParticionesList[i].size > size)
                 {
                     index = i;
+                    size = ParticionesList[i].size;
                 }
             }
             return ParticionesList[index];
