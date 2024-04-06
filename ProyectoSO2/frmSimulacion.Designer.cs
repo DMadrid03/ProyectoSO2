@@ -28,13 +28,14 @@
         /// </summary>
         private void InitializeComponent()
         {
-            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
             dgvProcesos = new DataGridView();
             btnAgregar = new Button();
             label1 = new Label();
             label2 = new Label();
             btnIniciar = new Button();
-            flowLayoutPanelMemoria = new Panel();
+            panMemoria = new Panel();
+            vScrollBar1 = new VScrollBar();
             ((System.ComponentModel.ISupportInitialize)dgvProcesos).BeginInit();
             SuspendLayout();
             // 
@@ -42,9 +43,9 @@
             // 
             dgvProcesos.AllowUserToAddRows = false;
             dgvProcesos.AllowUserToDeleteRows = false;
-            dataGridViewCellStyle2.BackColor = Color.FromArgb(192, 192, 255);
-            dataGridViewCellStyle2.Font = new Font("Nirmala UI", 8.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            dgvProcesos.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle1.BackColor = Color.FromArgb(192, 192, 255);
+            dataGridViewCellStyle1.Font = new Font("Nirmala UI", 8.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            dgvProcesos.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
             dgvProcesos.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dgvProcesos.GridColor = SystemColors.InactiveCaption;
             dgvProcesos.Location = new Point(26, 57);
@@ -95,19 +96,28 @@
             btnIniciar.UseVisualStyleBackColor = true;
             btnIniciar.Click += btnIniciar_Click;
             // 
-            // flowLayoutPanelMemoria
+            // panMemoria
             // 
-            flowLayoutPanelMemoria.Location = new Point(49, 283);
-            flowLayoutPanelMemoria.Name = "flowLayoutPanelMemoria";
-            flowLayoutPanelMemoria.Size = new Size(726, 271);
-            flowLayoutPanelMemoria.TabIndex = 6;
+            panMemoria.Location = new Point(26, 268);
+            panMemoria.Name = "panMemoria";
+            panMemoria.Size = new Size(765, 398);
+            panMemoria.TabIndex = 6;
+            // 
+            // vScrollBar1
+            // 
+            vScrollBar1.Dock = DockStyle.Right;
+            vScrollBar1.Location = new Point(823, 0);
+            vScrollBar1.Name = "vScrollBar1";
+            vScrollBar1.Size = new Size(20, 687);
+            vScrollBar1.TabIndex = 0;
             // 
             // frmSimulacion
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(812, 584);
-            Controls.Add(flowLayoutPanelMemoria);
+            ClientSize = new Size(843, 687);
+            Controls.Add(vScrollBar1);
+            Controls.Add(panMemoria);
             Controls.Add(btnIniciar);
             Controls.Add(label2);
             Controls.Add(label1);
@@ -127,6 +137,7 @@
         private Label label1;
         private Label label2;
         private Button btnIniciar;
-        private Panel flowLayoutPanelMemoria;
+        private Panel panMemoria;
+        private VScrollBar vScrollBar1;
     }
 }

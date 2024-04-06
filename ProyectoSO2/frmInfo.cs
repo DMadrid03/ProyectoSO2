@@ -63,11 +63,17 @@ namespace ProyectoSO2
 
         private void btnCrear_Click(object sender, EventArgs e)
         {
-            if (int.Parse(txtNParticiones.Text) >= int.Parse(txtTamanoTotal.Text) / 10)
+            if (int.Parse(txtNParticiones.Text) > 10)
             {
-                MessageBox.Show("Demasiadas particiones, el tamaño máximo es: " + (int.Parse(txtTamanoTotal.Text)/10) + " (10% del tamaño total) ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Muchas particiones para mostrar, el máximo son 10", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                txtNParticiones.Text = "10";
                 return;
             }
+            if (int.Parse(txtNParticiones.Text) > int.Parse(txtTamanoTotal.Text) / 10)
+            {
+                MessageBox.Show("Demasiadas particiones, el tamaño máximo es: " + (int.Parse(txtTamanoTotal.Text)/10) + " (10% del tamaño total) ", "Error, pruebe aumentar el tamaño total de memoria", MessageBoxButtons.OK, MessageBoxIcon.Error);                
+                return;
+            }            
             if (txtTamanoTotal.Text.Length == 0 || txtTamanoTotal.Text == " " || int.Parse(txtNParticiones.Text)==0)
             {
                 MessageBox.Show("Error, ingrese antes el tamaño total de la memoria y la cantidad de particiones mayor a cero");
@@ -81,7 +87,7 @@ namespace ProyectoSO2
                     int n = int.Parse(txtNParticiones.Text);
                     for (int i = 1; i <= n; i++)
                     {
-                        tabParticiones.Rows.Add(i, 50);
+                        tabParticiones.Rows.Add(i, 2);
                     }
                 }
                 catch (Exception)

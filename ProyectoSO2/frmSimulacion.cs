@@ -40,16 +40,12 @@ namespace ProyectoSO2
             max = int.Parse(filaInfo["max"].ToString());
             random = new Random();
 
-            flowLayoutPanelMemoria.BackColor = Color.Gray;
-
-            flowLayoutPanelMemoria.ControlAdded += flowLayoutPanelMemoria_ControlAdded;
-            CrearParticiones();
+            panMemoria.BackColor = Color.Gray;
+            
         }
 
         private void frmSimulacion_Load(object sender, EventArgs e)
-        {
-            flowLayoutPanelMemoria.Resize += FlowLayoutPanelMemoria_Resize;
-
+        {            
             tabProcesos.Columns.Add("ID");
             tabProcesos.Columns.Add("Nombre");
             tabProcesos.Columns.Add("Duración");
@@ -71,6 +67,36 @@ namespace ProyectoSO2
             fila["Tiempo Transcurrido"] = 0;
 
             tabProcesos.Rows.Add(fila);
+            dibujarParticiones();
+        }
+        private void dibujarParticiones()
+        {
+            panMemoria.Controls.Clear();
+
+                // Crear y agregar los paneles internos
+                for (int i = 1; i < particiones; i++)
+                {
+                    Panel panelParticion = new Panel();
+                    panelParticion.BackColor = System.Drawing.Color.Green;
+                    panelParticion.Dock = DockStyle.Top;
+                    panelParticion.Height = panMemoria.Height/particiones;
+                    panelParticion.BorderStyle = BorderStyle.FixedSingle;
+                    panelParticion.Name = "particion"+i;
+                     
+
+                    // Crear y configurar el label dentro del panel interno
+                    Label lblTexto = new Label();
+                lblTexto.Font = new Font("Verdana", 11, FontStyle.Regular);
+                    lblTexto.Text = panelParticion.Name + "      porcentaje usado:0%           tamaño: " + tabParticiones.Rows[i-1]["tamaño"];
+                    lblTexto.AutoSize = true;
+                    lblTexto.Location = new Point(panelParticion.Width/2, panelParticion.Height/2);
+
+                    // Agregar el label al panel interno
+                    panelParticion.Controls.Add(lblTexto);
+
+                    // Agregar el panel interno al contenedor
+                    panMemoria.Controls.Add(panelParticion);
+            }
         }
         private void actualizarGestor()
         {
@@ -90,8 +116,7 @@ namespace ProyectoSO2
                 fila["Estado"] = 0;
                 fila["Tiempo Transcurrido"] = 0;
 
-                tabProcesos.Rows.Add(fila);
-                AsignarProcesoAParticion(1,"prueba");
+                tabProcesos.Rows.Add(fila);                
             }
             
         }
@@ -130,93 +155,10 @@ namespace ProyectoSO2
 
         private void FlowLayoutPanelMemoria_Resize(object sender, EventArgs e)
         {
-            // Recalcular el ancho de las particiones cuando cambie el tamaño del panel
-            RecalcularAnchoParticiones();
-        }
-        private void CrearParticiones()
-        {
-            // Eliminar cualquier control existente en el FlowLayoutPanel
-            flowLayoutPanelMemoria.Controls.Clear();
-
-            // Calcular el ancho de cada partición (división entera)
-            int anchoParticion = flowLayoutPanelMemoria.Width / particiones;
-            int anchoRestante = flowLayoutPanelMemoria.Width % particiones;
-
-            // Crear y agregar las particiones al FlowLayoutPanel
-            for (int i = 0; i < particiones; i++)
-            {
-                FlowLayoutPanel particion = new FlowLayoutPanel();
-                particion.BackColor = Color.Green;
-                particion.BorderStyle = BorderStyle.FixedSingle;
-                particion.Height = flowLayoutPanelMemoria.Height; // Mismo alto que el FlowLayoutPanel principal
-                particion.Name = "particion_" + i;
-
-                // Ajustar el ancho de la última partición para ocupar el espacio restante
-                if (i == particiones - 1)
-                {
-                    anchoParticion += anchoRestante;
-                }
-                particion.Width = anchoParticion;
-
-                // Crear y configurar el label
-                Label lblInfoParticion = new Label();
-                lblInfoParticion.Text = "Particion " + i; // Texto por defecto
-                lblInfoParticion.AutoSize = false;
-                lblInfoParticion.TextAlign = ContentAlignment.MiddleCenter;
-                lblInfoParticion.Dock = DockStyle.Fill; // Para que se expanda y se centre dentro del FlowLayoutPanel
-
-                // Agregar el label a la partición
-                particion.Controls.Add(lblInfoParticion);
-                particion.CreateControl();
-                
-
-                // Agregar la partición al FlowLayoutPanel
-                flowLayoutPanelMemoria.Controls.Add(particion);                
-                flowLayoutPanelMemoria.Refresh();
-                particion.Refresh();
-                flowLayoutPanelMemoria.Controls[0].Controls[0].BringToFront();
-            }
-        }
-
-        private void RecalcularAnchoParticiones()
-        {
-            // Calcular el ancho de cada partición
-            int anchoParticion = flowLayoutPanelMemoria.Width / particiones;
-
-            // Ajustar el ancho de cada partición
-            foreach (FlowLayoutPanel particion in flowLayoutPanelMemoria.Controls)
-            {
-                particion.Width = anchoParticion;
-            }
-        }
-        private void AsignarProcesoAParticion(int indiceParticion, string nombreProceso)
-        {
-            if (indiceParticion >= 0 && indiceParticion < flowLayoutPanelMemoria.Controls.Count)
-            {
-                // Obtener la partición correspondiente
-                FlowLayoutPanel particion = (FlowLayoutPanel)flowLayoutPanelMemoria.Controls[indiceParticion];
-
-                // Obtener el label de la partición
-                Label lblInfoParticion = (Label)particion.Controls[0]; // El label es el primer control de la partición
-
-                // Asignar el nombre del proceso al label
-                lblInfoParticion.Text = nombreProceso;
-            }
-        }
+        }        
         private void flowLayoutPanelMemoria_ControlAdded(object sender, ControlEventArgs e)
         {
-            // Verificar si todos los controles han sido agregados
-            if (flowLayoutPanelMemoria.Controls.Count == particiones)
-            {
-                // Calcular el ancho de cada partición después de que todos los controles han sido agregados
-                int anchoParticion = flowLayoutPanelMemoria.Width / particiones;
-
-                // Ajustar el ancho de cada partición
-                foreach (FlowLayoutPanel particion in flowLayoutPanelMemoria.Controls)
-                {
-                    particion.Width = anchoParticion;
-                }
-            }
+         
         }
 
         private int procesosNoVacios()
@@ -259,14 +201,16 @@ namespace ProyectoSO2
         }
         private void btnIniciar_Click(object sender, EventArgs e)
         {
-            if (procesosNoVacios() == -1)
+            int bandera = procesosNoVacios();
+            if (bandera == -1)
             {
                 MessageBox.Show("Faltan datos de los procesos", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            if (procesosNoVacios() == -2)
+            if (bandera == -2)
             {
                 MessageBox.Show("La cantidad de memoria requerida de un proceso no puede ser cero", "Error con la memoria requerida", MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                return;
             }
             else
             {
@@ -289,14 +233,25 @@ namespace ProyectoSO2
 
                     btnAgregar.Visible = false;
                     btnIniciar.Visible = false;
+                    dgvProcesos.ReadOnly = true;
                     //btnDetener.Visible = true;
-                    gestor.particionesLibres();
                     particionesList = gestor.ParticionesList;
                     procesosList = gestor.ProcesosList;
                 }
             }
                 
 
+        }
+        private void DibujarParticionesOcupadas()
+        {
+            foreach(Proceso proc in procesosList)
+            {
+                //si el boleto está en una partición, asignarlo a la partición dibujada
+                if (proc.ParticionID != -1)
+                {
+                    //panMemoria.Controls("")
+                }
+            }
         }
     }
 }
