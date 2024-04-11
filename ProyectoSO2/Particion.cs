@@ -17,7 +17,7 @@ namespace entornoPruebaClasesProyecto
         {
             id = int.Parse(fila["Numero"].ToString());
             size = int.Parse(fila["tamaño"].ToString());
-            ocupado = false;
+            ocupado = bool.Parse(fila["ocupado"].ToString());
         }
         public void liberarParticion()
         {

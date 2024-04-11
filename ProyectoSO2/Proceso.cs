@@ -25,10 +25,10 @@ namespace entornoPruebaClasesProyecto
             Nombre = fila["Nombre"].ToString();
             Duracion = int.Parse(fila["Duración"].ToString());
             MemoriaRequerida = int.Parse(fila["memoria Requerida"].ToString());
-            Estado = 1;
-            TiempoTranscurrido = 0;
-            TiempoInicio = -1;
-            ParticionID = 0;
+            Estado =int.Parse(fila["estado"].ToString());//al inicio en estado 2 (En espera de memori)
+            TiempoTranscurrido = int.Parse(fila["tiempo transcurrido"].ToString());
+            TiempoInicio = int.Parse(fila["Tiempo Inicio"].ToString());
+            ParticionID = int.Parse(fila["particionID"].ToString());
         }
 
     }

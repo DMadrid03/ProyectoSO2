@@ -10,6 +10,8 @@ using System.Windows.Forms;
 using System.Numerics;
 using entornoPruebaClasesProyecto;
 using System.Diagnostics.Metrics;
+using System.Reflection.Metadata.Ecma335;
+using Microsoft.VisualBasic;
 
 namespace ProyectoSO2
 {
@@ -25,11 +27,13 @@ namespace ProyectoSO2
         List<Particion> particionesList;
         List<Proceso> procesosList;
         Gestor gestor;
+        bool simulacion;
+        Thread hiloPrincipal;
         public frmSimulacion(DataRow fila, DataTable tbPart)
         {
             InitializeComponent();
-
-            tabParticiones = tbPart;
+            simulacion = false;
+            tabParticiones = tbPart;            
             filaInfo = fila;
             tabProcesos = new DataTable();
             gestor = new Gestor(tabProcesos, tabParticiones);
@@ -41,7 +45,7 @@ namespace ProyectoSO2
             random = new Random();
 
             panMemoria.BackColor = Color.Gray;
-            
+
         }
 
         private void frmSimulacion_Load(object sender, EventArgs e)
@@ -52,6 +56,8 @@ namespace ProyectoSO2
             tabProcesos.Columns.Add("Memoria Requerida");
             tabProcesos.Columns.Add("Estado");
             tabProcesos.Columns.Add("Tiempo Transcurrido");
+            tabProcesos.Columns.Add("particionID");
+            tabProcesos.Columns.Add("Tiempo Inicio");
             dgvProcesos.DataSource = tabProcesos;
 
             dgvProcesos.Columns["ID"].ReadOnly = true; dgvProcesos.Columns["ID"].Width = 35;
@@ -59,43 +65,46 @@ namespace ProyectoSO2
             dgvProcesos.Columns["Estado"].ReadOnly = true; dgvProcesos.Columns["Estado"].Width = 50;
             dgvProcesos.Columns["Tiempo Transcurrido"].ReadOnly = true; dgvProcesos.Columns["Tiempo Transcurrido"].Width = 90;
             dgvProcesos.Columns["Nombre"].Width = 250; dgvProcesos.Columns["Duración"].Width = 70;
+            dgvProcesos.Columns["Tiempo Inicio"].Visible = false;
+            dgvProcesos.Columns["ParticionID"].ReadOnly = true;
             //agregar fila para el primer proceso
             DataRow fila = tabProcesos.NewRow();
             fila["ID"] = 1;
             fila["Duración"] = random.Next(min, max);
-            fila["Estado"] = 0;
+            fila["Estado"] = 2;
             fila["Tiempo Transcurrido"] = 0;
-
+            fila["tiempo inicio"] = -1;
+            fila["ParticionID"] = 0;
             tabProcesos.Rows.Add(fila);
-            dibujarParticiones();
+            dibujarParticiones();            
         }
         private void dibujarParticiones()
         {
             panMemoria.Controls.Clear();
 
-                // Crear y agregar los paneles internos
-                for (int i = 1; i < particiones; i++)
-                {
-                    Panel panelParticion = new Panel();
-                    panelParticion.BackColor = System.Drawing.Color.Green;
-                    panelParticion.Dock = DockStyle.Top;
-                    panelParticion.Height = panMemoria.Height/particiones;
-                    panelParticion.BorderStyle = BorderStyle.FixedSingle;
-                    panelParticion.Name = "particion"+i;
-                     
+            // Crear y agregar los paneles internos
+            for (int i = 0; i < particiones-1; i++)
+            {
+                Panel panelParticion = new Panel();
+                panelParticion.BackColor = System.Drawing.Color.Green;
+                panelParticion.Dock = DockStyle.Top;
+                panelParticion.Height = panMemoria.Height / particiones;
+                panelParticion.BorderStyle = BorderStyle.FixedSingle;
+                panelParticion.Name = "particion" + i;
 
-                    // Crear y configurar el label dentro del panel interno
-                    Label lblTexto = new Label();
+
+                // Crear y configurar el label dentro del panel interno
+                Label lblTexto = new Label();
                 lblTexto.Font = new Font("Verdana", 11, FontStyle.Regular);
-                    lblTexto.Text = panelParticion.Name + "      porcentaje usado:0%           tamaño: " + tabParticiones.Rows[i-1]["tamaño"];
-                    lblTexto.AutoSize = true;
-                    lblTexto.Location = new Point(panelParticion.Width/2, panelParticion.Height/2);
+                lblTexto.Text = panelParticion.Name + "      porcentaje usado:0%           tamaño: " + tabParticiones.Rows[i ]["tamaño"];
+                lblTexto.AutoSize = true;
+                lblTexto.Location = new Point(panelParticion.Width / 2, panelParticion.Height / 2);
 
-                    // Agregar el label al panel interno
-                    panelParticion.Controls.Add(lblTexto);
+                // Agregar el label al panel interno
+                panelParticion.Controls.Add(lblTexto);
 
-                    // Agregar el panel interno al contenedor
-                    panMemoria.Controls.Add(panelParticion);
+                // Agregar el panel interno al contenedor
+                panMemoria.Controls.Add(panelParticion);
             }
         }
         private void actualizarGestor()
@@ -106,21 +115,23 @@ namespace ProyectoSO2
         }
 
         private void btnAgregar_Click(object sender, EventArgs e)
-        {
-            
+        {            
+            DataRow fila;
+
             if (validarProceso())
             {
-                DataRow fila = tabProcesos.NewRow();
+                fila = tabProcesos.NewRow();
                 fila["ID"] = int.Parse(tabProcesos.Rows[tabProcesos.Rows.Count - 1]["ID"].ToString()) + 1;
                 fila["Duración"] = random.Next(min, max);
-                fila["Estado"] = 0;
+                fila["Estado"] = 2;
                 fila["Tiempo Transcurrido"] = 0;
-
-                tabProcesos.Rows.Add(fila);                
+                fila["particionID"] = 0;
+                fila["tiempo inicio"] = -1;
+                tabProcesos.Rows.Add(fila);
             }
-            
+
         }
-       
+
 
         private void dgvProcesos_CellValidating(object sender, DataGridViewCellValidatingEventArgs e)
         {
@@ -155,10 +166,10 @@ namespace ProyectoSO2
 
         private void FlowLayoutPanelMemoria_Resize(object sender, EventArgs e)
         {
-        }        
+        }
         private void flowLayoutPanelMemoria_ControlAdded(object sender, ControlEventArgs e)
         {
-         
+
         }
 
         private int procesosNoVacios()
@@ -168,7 +179,7 @@ namespace ProyectoSO2
 
             foreach (DataRow row in tabProcesos.Rows)
             {
-                if (row["Nombre"].ToString().Length== 0 || row["Memoria requerida"].ToString().Length == 0)                
+                if (row["Nombre"].ToString().Length == 0 || row["Memoria requerida"].ToString().Length == 0)
                     return -1;//significa que faltan datos
 
                 if (int.Parse(row["Memoria requerida"].ToString()) == 0)
@@ -215,8 +226,24 @@ namespace ProyectoSO2
             else
             {
                 if (validarProceso())
-                {
-                    actualizarGestor();
+                    simulacion = true;
+                else
+                    return;
+                btnAgregar.Visible = false;
+                btnIniciar.Visible = false;
+                dgvProcesos.ReadOnly = true;
+                btnDetener.Visible = true;
+                hiloPrincipal = new Thread(new ThreadStart(accionesPeriodicas));
+                hiloPrincipal.Start();
+            }
+
+
+        }
+        public void accionesPeriodicas()
+        {
+            while (simulacion)
+            {             
+                actualizarGestor();
 
                     if (gestor.verificarProcesoSaliente() || gestor.particionesLibres() > 0)
                     {
@@ -230,28 +257,77 @@ namespace ProyectoSO2
                         }
                     }
 
+                particionesList = gestor.ParticionesList;
+                procesosList = gestor.ProcesosList;  
 
-                    btnAgregar.Visible = false;
-                    btnIniciar.Visible = false;
-                    dgvProcesos.ReadOnly = true;
-                    //btnDetener.Visible = true;
-                    particionesList = gestor.ParticionesList;
-                    procesosList = gestor.ProcesosList;
-                }
-            }
-                
+                Thread.Sleep(1000);
 
-        }
-        private void DibujarParticionesOcupadas()
-        {
-            foreach(Proceso proc in procesosList)
-            {
-                //si el boleto está en una partición, asignarlo a la partición dibujada
-                if (proc.ParticionID != -1)
+                dgvProcesos.Invoke((MethodInvoker)delegate
+                {                    
+                    dgvProcesos.DataSource = null;
+                    tabProcesos.Rows.Clear();
+                    tabProcesos = gestor.getTableProcesos();
+                    dgvProcesos.DataSource = tabProcesos;
+                    dgvProcesos.Refresh();
+                    
+                });
+                tabParticiones.Rows.Clear();
+                tabParticiones = gestor.getTableParticiones();
+
+
+                //recorrer los procesos y llamar a la función de actualizar paneles para la particionid que ocupan
+                foreach(Proceso proceso in procesosList)
                 {
-                    //panMemoria.Controls("")
+                    if(proceso.ParticionID != -1)
+                    {
+                        if(proceso.ParticionID >0 )
+                        {
+                            actualizarPanel(proceso.ParticionID - 1, proceso);
+                        }
+                    }
+                }
+
+                panelesLibres();
+               
+                
+                if (gestor.procesosTerminados == procesosList.Count) //verificar que ya no hayan procesos para ejecutar
+                    simulacion = false;
+
+
+                                                
+            }
+        }
+        private void actualizarPanel(int particionID, Proceso proceso)
+        {
+            panMemoria.Invoke((MethodInvoker)delegate
+            {
+                panMemoria.Controls[particionID].BackColor = Color.Yellow;
+                panMemoria.Controls[particionID].Text = "Particion " + particionID + "      " +
+                "porcentaje usado: " + particionesList[particionID].size / proceso.MemoriaRequerida + 
+                "%          tamaño: " + particionesList[particionID].size;
+            });
+            
+        }
+        private void panelesLibres()
+        {
+            //pintar paneles libres
+            for (int i =0;i<particionesList.Count;i++) 
+            {
+                if (!particionesList[i].ocupado)
+                {
+                    panMemoria.Invoke((MethodInvoker)delegate
+                    {
+                        panMemoria.Controls[i].BackColor = Color.Green;
+                        panMemoria.Controls[i].Text = "Particion Libre";
+                    });
                 }
             }
+        }
+        private void btnDetener_Click(object sender, EventArgs e)
+        {
+            particionesList = gestor.ParticionesList;
+            procesosList = gestor.ProcesosList;
+            simulacion = false;
         }
     }
 }

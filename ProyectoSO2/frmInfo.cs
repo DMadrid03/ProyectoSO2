@@ -11,6 +11,7 @@ namespace ProyectoSO2
             InitializeComponent();
             tabParticiones = new DataTable();
             tabParticiones.Columns.Add("Numero"); tabParticiones.Columns.Add("Tamaño");
+            tabParticiones.Columns.Add("Ocupado");
             dgvParticiones.DataSource = tabParticiones;
         }
         private void LimitarATextoNumerico(TextBox textBox, KeyPressEventArgs e)
@@ -47,6 +48,7 @@ namespace ProyectoSO2
             btnValidar.Visible = false;
             dgvParticiones.Columns["Numero"].ReadOnly = true;
             dgvParticiones.Columns["Tamaño"].ReadOnly = true;
+            dgvParticiones.Columns["ocupado"].Visible = false;
             dgvParticiones.AllowUserToAddRows = false;
             dgvParticiones.AllowUserToDeleteRows = false;
 
@@ -87,7 +89,7 @@ namespace ProyectoSO2
                     int n = int.Parse(txtNParticiones.Text);
                     for (int i = 1; i <= n; i++)
                     {
-                        tabParticiones.Rows.Add(i, 2);
+                        tabParticiones.Rows.Add(i, tamanoTotal/n,false);
                     }
                 }
                 catch (Exception)
@@ -124,10 +126,7 @@ namespace ProyectoSO2
             fila["max"] = int.Parse(txtMax.Text);
             
             frmSimulacion frmSim = new frmSimulacion(fila,tabParticiones);
-            frmSim.Show();
-            //this.Dispose();
-            
-            
+            frmSim.Show();            
         }
 
         private void dgvParticiones_Enter(object sender, EventArgs e)
@@ -152,6 +151,18 @@ namespace ProyectoSO2
 
                     // Cancela la edición de la celda
                     dgvParticiones.CancelEdit();
+                }
+                if (numero < 0)
+                {
+                    DialogResult result = MessageBox.Show("El tamaño de la partición no puede ser negativo. ¿Desea cambiarlo a positivo?", "Error de datos de entrada", MessageBoxButtons.OKCancel, MessageBoxIcon.Error);
+                    if (result == DialogResult.OK)
+                    {
+                        dgvParticiones.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = Math.Abs(numero);
+                    }
+                    else
+                    {
+                        dgvParticiones.CancelEdit();
+                    }
                 }
             }
         }
@@ -185,14 +196,30 @@ namespace ProyectoSO2
                     MessageBox.Show("Debe agregar " + (tamanoTotal - totalingresado) + " espacio en las particiones", "Falta espacio para completar el total de memoria");
                     return;
                 }
-                if(int.Parse(txtMax.Text)< int.Parse(txtMin.Text))
+                if(int.Parse(txtMax.Text)<= int.Parse(txtMin.Text))
                 {
                     MessageBox.Show("Error en el intervalo","Error",MessageBoxButtons.OK, MessageBoxIcon.Stop);
                     return;
                 }
+                //btnSiguiente_Click(sender, new EventArgs());
+                DataTable dt = new DataTable();
+                dt.Columns.Add("tamTot", typeof(float));
+                dt.Columns.Add("politica", typeof(String));
+                dt.Columns.Add("nParticiones", typeof(int));
+                dt.Columns.Add("min", typeof(int));
+                dt.Columns.Add("max", typeof(int));
+
+                DataRow fila = dt.NewRow();
+                fila["tamTot"] = tamanoTotal;
+                fila["politica"] = cmbPolitica.SelectedItem.ToString();
+                fila["nParticiones"] = int.Parse(txtNParticiones.Text);
+                fila["min"] = int.Parse(txtMin.Text);
+                fila["max"] = int.Parse(txtMax.Text);
+
+                frmSimulacion frmSim = new frmSimulacion(fila, tabParticiones);
+                dgvParticiones.DataSource = null;
+                frmSim.Show();
                 
-                btnValidar.Visible = false;
-                btnSiguiente.Visible = true;
             }
             else
             {

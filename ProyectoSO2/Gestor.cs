@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,9 +15,11 @@ namespace entornoPruebaClasesProyecto
         public List<Proceso> ProcesosList;
         public List<Particion> ParticionesList;
         private DataTable tabProcesos, tabParticiones;
+        public int procesosTerminados;
 
         public Gestor(DataTable tabProcesos,DataTable tabParticiones)
         {
+            procesosTerminados = 0;
            this.tabProcesos = tabProcesos;
            this.tabParticiones = tabParticiones;
             ProcesosList = new List<Proceso>();
@@ -46,10 +49,11 @@ namespace entornoPruebaClasesProyecto
         }
         public DataTable getTableProcesos()
         {
-            tabProcesos.Rows.Clear();
-            DataRow fila =  tabProcesos.NewRow();
+            if(tabProcesos.Rows.Count >0)tabProcesos.Rows.Clear();
+            DataRow fila;
             foreach (Proceso p in ProcesosList)
             {
+                fila = tabProcesos.NewRow();
                 fila["ID"] = p.id;
                 fila["nombre"] = p.Nombre;
                 fila["Duración"] = p.Duracion;
@@ -65,9 +69,10 @@ namespace entornoPruebaClasesProyecto
         public DataTable getTableParticiones()
         {
             tabParticiones.Rows.Clear();
-            DataRow fila = tabParticiones.NewRow();
+            DataRow fila;
             foreach(Particion p in ParticionesList)
             {
+                fila = tabParticiones.NewRow();
                 fila["Numero"] = p.id;
                 fila["Tamaño"] = p.size;
                 fila["Ocupado"] = p.ocupado;
@@ -79,17 +84,26 @@ namespace entornoPruebaClasesProyecto
         public bool verificarProcesoSaliente()
         {
             bool SalieronProcesos = false;
-            for(int i=1; i < ProcesosList.Count; i++)
+            int pt = 0;
+            for(int i=0; i < ProcesosList.Count; i++)
             {
                 proceso = ProcesosList[i];
-                if(proceso.Estado ==2 && proceso.Duracion ==proceso.TiempoTranscurrido - proceso.TiempoInicio)
-                {
+                if(proceso.Estado ==1 && proceso.Duracion ==proceso.TiempoTranscurrido - proceso.TiempoInicio)
+                {//proceso en ejecución, y ya paso su tiempo de ejecución
+                    ParticionesList[proceso.ParticionID - 1].liberarParticion();
                     proceso.Estado = 3;
                     SalieronProcesos = true;
-                    proceso.ParticionID = -1;
-                    ProcesosList[i] = proceso;
+                    proceso.ParticionID = -1;//sacar proceso
+                    ProcesosList[i] = proceso;                    
                 }
+                if(proceso.Estado != 3)
+                {//el proceso está en memoria y se seguirá ejecutando
+                    proceso.TiempoTranscurrido++;
+                }
+                if (proceso.ParticionID == -1)
+                    pt++;//conteo de procesos terminados
             }
+            procesosTerminados = pt;
             return SalieronProcesos;
         }
         public int particionesLibres()
@@ -106,7 +120,7 @@ namespace entornoPruebaClasesProyecto
         {//va a asignar el/los procesos libres en las particiones de memoria que estén libres usando mejor ajuste            
             foreach(Proceso proc in ProcesosList)
             {
-                if(proc.Estado ==1){
+                if(proc.Estado ==2){
                     proceso = proc;
                     int diferencia = 100000000;
                     int particionIndex = -1;
@@ -121,11 +135,15 @@ namespace entornoPruebaClasesProyecto
                                 proceso.ParticionID = particion.id;
                                 particionIndex = i;
                             }
-                            proceso.Estado = 2;
+                            proceso.Estado = 1;                            
                         }                       
                     }
-                    proc.ParticionID = proceso.ParticionID;//asignar el proceso a esa partición
-                    ParticionesList[particionIndex].ocupado = true; //marcar la partición como ocupada
+                    if(particionIndex != -1)
+                    {//ese proceso encontró una particion donde ubicarse
+                        proc.ParticionID = proceso.ParticionID;//asignar el proceso a esa partición
+                        proc.TiempoInicio = proceso.TiempoTranscurrido - 1;//guardar el segundo en que ese proceso entró a memoria
+                        ParticionesList[particionIndex].ocupado = true; //marcar la partición como ocupada
+                    }
                     
                 }
             }
@@ -134,16 +152,17 @@ namespace entornoPruebaClasesProyecto
         {            
             foreach(Proceso pro in ProcesosList)
             {//asignar los procesos libres a los huecos libres de memoria usando primer ajuste
-                if(pro.Estado == 1)
+                if(pro.Estado == 2)
                 {
                     foreach(Particion par in ParticionesList)
                     {
                         if(par.ocupado == false && pro.MemoriaRequerida <= par.size)
                         {
-                            pro.ParticionID = par.id;
-                            pro.Estado = 2;
+                            pro.ParticionID = par.id;//asignar directamente el proceso a la partición
+                            pro.TiempoInicio = pro.TiempoTranscurrido;
+                            pro.Estado = 1;//proceso en estado (ejecutando)
                             par.ocupado = true;
-                            break;
+                            break;//dejar de buscar particiones para ese proceso
                         }
                     }
                 }

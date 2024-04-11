@@ -36,6 +36,7 @@
             btnIniciar = new Button();
             panMemoria = new Panel();
             vScrollBar1 = new VScrollBar();
+            btnDetener = new Button();
             ((System.ComponentModel.ISupportInitialize)dgvProcesos).BeginInit();
             SuspendLayout();
             // 
@@ -50,7 +51,7 @@
             dgvProcesos.GridColor = SystemColors.InactiveCaption;
             dgvProcesos.Location = new Point(26, 57);
             dgvProcesos.Name = "dgvProcesos";
-            dgvProcesos.Size = new Size(626, 150);
+            dgvProcesos.Size = new Size(825, 205);
             dgvProcesos.TabIndex = 1;
             dgvProcesos.CellValidating += dgvProcesos_CellValidating;
             dgvProcesos.EditingControlShowing += dgvProcesos_EditingControlShowing;
@@ -58,9 +59,9 @@
             // 
             // btnAgregar
             // 
-            btnAgregar.Location = new Point(658, 57);
+            btnAgregar.Location = new Point(857, 57);
             btnAgregar.Name = "btnAgregar";
-            btnAgregar.Size = new Size(133, 29);
+            btnAgregar.Size = new Size(110, 30);
             btnAgregar.TabIndex = 2;
             btnAgregar.Text = "Nuevo Proceso";
             btnAgregar.UseVisualStyleBackColor = true;
@@ -80,7 +81,7 @@
             // 
             label2.AutoSize = true;
             label2.Font = new Font("Segoe UI Semibold", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label2.Location = new Point(26, 231);
+            label2.Location = new Point(26, 324);
             label2.Name = "label2";
             label2.Size = new Size(84, 20);
             label2.TabIndex = 4;
@@ -88,9 +89,9 @@
             // 
             // btnIniciar
             // 
-            btnIniciar.Location = new Point(658, 156);
+            btnIniciar.Location = new Point(857, 105);
             btnIniciar.Name = "btnIniciar";
-            btnIniciar.Size = new Size(133, 51);
+            btnIniciar.Size = new Size(110, 48);
             btnIniciar.TabIndex = 5;
             btnIniciar.Text = "Iniciar Simulación";
             btnIniciar.UseVisualStyleBackColor = true;
@@ -98,24 +99,36 @@
             // 
             // panMemoria
             // 
-            panMemoria.Location = new Point(26, 268);
+            panMemoria.Location = new Point(26, 369);
             panMemoria.Name = "panMemoria";
-            panMemoria.Size = new Size(765, 398);
+            panMemoria.Size = new Size(735, 348);
             panMemoria.TabIndex = 6;
             // 
             // vScrollBar1
             // 
             vScrollBar1.Dock = DockStyle.Right;
-            vScrollBar1.Location = new Point(823, 0);
+            vScrollBar1.Location = new Point(982, 0);
             vScrollBar1.Name = "vScrollBar1";
-            vScrollBar1.Size = new Size(20, 687);
+            vScrollBar1.Size = new Size(20, 749);
             vScrollBar1.TabIndex = 0;
+            // 
+            // btnDetener
+            // 
+            btnDetener.Location = new Point(777, 369);
+            btnDetener.Name = "btnDetener";
+            btnDetener.Size = new Size(152, 69);
+            btnDetener.TabIndex = 7;
+            btnDetener.Text = "Detener Simulación";
+            btnDetener.UseVisualStyleBackColor = true;
+            btnDetener.Visible = false;
+            btnDetener.Click += btnDetener_Click;
             // 
             // frmSimulacion
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(843, 687);
+            ClientSize = new Size(1002, 749);
+            Controls.Add(btnDetener);
             Controls.Add(vScrollBar1);
             Controls.Add(panMemoria);
             Controls.Add(btnIniciar);
@@ -139,5 +152,6 @@
         private Button btnIniciar;
         private Panel panMemoria;
         private VScrollBar vScrollBar1;
+        private Button btnDetener;
     }
 }
