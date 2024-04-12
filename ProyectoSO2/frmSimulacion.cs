@@ -30,7 +30,7 @@ namespace ProyectoSO2
         bool simulacion;
         Thread hiloPrincipal;
         public frmSimulacion(DataRow fila, DataTable tbPart)
-        {
+        {//recibe un arreglo lineal con la información inicial que ingresó el usuario y recibe la tabla de particiones
             InitializeComponent();
             simulacion = false;
             tabParticiones = tbPart;            
@@ -49,7 +49,8 @@ namespace ProyectoSO2
         }
 
         private void frmSimulacion_Load(object sender, EventArgs e)
-        {            
+        {      
+            //configurar el datagridView y la tabla para guardar procesos
             tabProcesos.Columns.Add("ID");
             tabProcesos.Columns.Add("Nombre");
             tabProcesos.Columns.Add("Duración");
@@ -67,6 +68,7 @@ namespace ProyectoSO2
             dgvProcesos.Columns["Nombre"].Width = 250; dgvProcesos.Columns["Duración"].Width = 70;
             dgvProcesos.Columns["Tiempo Inicio"].Visible = false;
             dgvProcesos.Columns["ParticionID"].ReadOnly = true;
+
             //agregar fila para el primer proceso
             DataRow fila = tabProcesos.NewRow();
             fila["ID"] = 1;
@@ -98,7 +100,7 @@ namespace ProyectoSO2
                 lblTexto.Font = new Font("Verdana", 11, FontStyle.Regular);
                 lblTexto.Text = panelParticion.Name + "      porcentaje usado:0%           tamaño: " + tabParticiones.Rows[i ]["tamaño"];
                 lblTexto.AutoSize = true;
-                lblTexto.Location = new Point(panelParticion.Width / 2, panelParticion.Height / 2);
+                lblTexto.Location = new Point(panelParticion.Width / 5, panelParticion.Height / 4);
 
                 // Agregar el label al panel interno
                 panelParticion.Controls.Add(lblTexto);
@@ -108,7 +110,8 @@ namespace ProyectoSO2
             }
         }
         private void actualizarGestor()
-        {
+        {//actualizar las listas de procesos y particiones con las que trabaja el gestor
+            //en base a las versiones actuales (de las tablas)
             gestor = new Gestor(tabProcesos, tabParticiones);
             gestor.getParticionesList();
             gestor.getProcesosList();
@@ -121,8 +124,8 @@ namespace ProyectoSO2
             if (validarProceso())
             {
                 fila = tabProcesos.NewRow();
-                fila["ID"] = int.Parse(tabProcesos.Rows[tabProcesos.Rows.Count - 1]["ID"].ToString()) + 1;
-                fila["Duración"] = random.Next(min, max);
+                fila["ID"] = int.Parse(tabProcesos.Rows[tabProcesos.Rows.Count - 1]["ID"].ToString()) + 1; //calcular el id
+                fila["Duración"] = random.Next(min, max); //generar automaticamente
                 fila["Estado"] = 2;
                 fila["Tiempo Transcurrido"] = 0;
                 fila["particionID"] = 0;
@@ -134,10 +137,9 @@ namespace ProyectoSO2
 
 
         private void dgvProcesos_CellValidating(object sender, DataGridViewCellValidatingEventArgs e)
-        {
+        {//validaciones de rango y racionalidad para el campo memoria requerida
             if (e.ColumnIndex == dgvProcesos.Columns["Memoria Requerida"].Index)
-            {
-                // Obtén el valor de la celda que se está validando
+            {                
                 string valor = e.FormattedValue.ToString();
 
                 // Intenta convertir el valor a un número
@@ -147,8 +149,12 @@ namespace ProyectoSO2
                     // Si no se puede convertir a número, muestra un mensaje de error
                     MessageBox.Show("Ingrese solo números en la columna 'Memoria Requerida'.", "Error de validación",
                         MessageBoxButtons.OK, MessageBoxIcon.Error);
-
-                    // Cancela la edición de la celda
+                    
+                    dgvProcesos.CancelEdit();
+                }
+                if (numero < 0)
+                {
+                    MessageBox.Show("No permitido valores negativos en Memoria requerida", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                     dgvProcesos.CancelEdit();
                 }
             }
@@ -174,7 +180,6 @@ namespace ProyectoSO2
 
         private int procesosNoVacios()
         {
-            bool procesosVacios = false;
             //verificar que los datos que el usuario debe ingresar no estén vacíos            
 
             foreach (DataRow row in tabProcesos.Rows)
@@ -183,7 +188,8 @@ namespace ProyectoSO2
                     return -1;//significa que faltan datos
 
                 if (int.Parse(row["Memoria requerida"].ToString()) == 0)
-                    return -2;
+                    return -2; //significa que se esta poniendo como 0 la memoria requerida
+                //retorna -2 como valor bandera de que hay que envíar advertencia al usuario
             }
             return 0;
         }
@@ -200,7 +206,7 @@ namespace ProyectoSO2
             }
             actualizarGestor();//reinicializar el gestor con los procesos agregados
             //hasta el momento (para que el procesosList esté actualizado)
-            Particion p = gestor.particionMasGrande();///REVISAAAARRR FUNCION PARTICION MAS GRANDE
+            Particion p = gestor.particionMasGrande();
             if (int.Parse(f["Memoria Requerida"].ToString()) > p.size)
             {
                 MessageBox.Show("El proceso requiere demasiada memoria y no podrá ser ejecutado", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -233,7 +239,10 @@ namespace ProyectoSO2
                 btnIniciar.Visible = false;
                 dgvProcesos.ReadOnly = true;
                 btnDetener.Visible = true;
+                //una vez todos los datos son correctos iniciar el hilo
                 hiloPrincipal = new Thread(new ThreadStart(accionesPeriodicas));
+                //el método accionesPeriodicas() tiene las llamadas a otros métodos que componen las funciones
+                //que se deben de ejecutar cada segundo
                 hiloPrincipal.Start();
             }
 
@@ -257,20 +266,24 @@ namespace ProyectoSO2
                         }
                     }
 
+                //actualizar las listas del formulario en base a las del objeto Gestor
+                //que acaba de asignar o sacar procesos de la memoria.
                 particionesList = gestor.ParticionesList;
                 procesosList = gestor.ProcesosList;  
 
-                Thread.Sleep(1000);
+                Thread.Sleep(1000); //suspender el hilo por un segundo
 
                 dgvProcesos.Invoke((MethodInvoker)delegate
-                {                    
+                {//llamada asíncrona al manejador de los objetos de la interfaz gráfica para poder modificarlos
                     dgvProcesos.DataSource = null;
                     tabProcesos.Rows.Clear();
                     tabProcesos = gestor.getTableProcesos();
                     dgvProcesos.DataSource = tabProcesos;
-                    dgvProcesos.Refresh();
+                    dgvProcesos.Refresh();//refrescar el DataGridView para que se reflejen los cambios de
+                    //tiempo transcurrido ,particion que ocupa y estado.
                     
                 });
+                
                 tabParticiones.Rows.Clear();
                 tabParticiones = gestor.getTableParticiones();
 
@@ -278,7 +291,7 @@ namespace ProyectoSO2
                 //recorrer los procesos y llamar a la función de actualizar paneles para la particionid que ocupan
                 foreach(Proceso proceso in procesosList)
                 {
-                    if(proceso.ParticionID != -1)
+                    if(proceso.ParticionID != -1)//proceso en ejecución.
                     {
                         if(proceso.ParticionID >0 )
                         {
@@ -292,19 +305,19 @@ namespace ProyectoSO2
                 
                 if (gestor.procesosTerminados == procesosList.Count) //verificar que ya no hayan procesos para ejecutar
                     simulacion = false;
-
-
                                                 
             }
         }
         private void actualizarPanel(int particionID, Proceso proceso)
-        {
+        {//pone la información del proceso en su panel correlativo que representa su partición.
+            float usado = (proceso.MemoriaRequerida / particionesList[particionID].size) * 100;
             panMemoria.Invoke((MethodInvoker)delegate
             {
                 panMemoria.Controls[particionID].BackColor = Color.Yellow;
-                panMemoria.Controls[particionID].Text = "Particion " + particionID + "      " +
-                "porcentaje usado: " + particionesList[particionID].size / proceso.MemoriaRequerida + 
-                "%          tamaño: " + particionesList[particionID].size;
+                panMemoria.Controls[particionID].Controls[0].Text = "Particion " + particionID + "    Aloja proceso: " +
+                proceso.Nombre +
+                "       Usado: " + usado + 
+                "%          tamaño: " + particionesList[particionID].size + "      Tiempo: " + proceso.TiempoTranscurrido;
             });
             
         }
@@ -318,7 +331,7 @@ namespace ProyectoSO2
                     panMemoria.Invoke((MethodInvoker)delegate
                     {
                         panMemoria.Controls[i].BackColor = Color.Green;
-                        panMemoria.Controls[i].Text = "Particion Libre";
+                        panMemoria.Controls[i].Controls[0].Text = "Particion " + i + " Libre";
                     });
                 }
             }

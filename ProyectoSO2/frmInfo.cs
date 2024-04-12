@@ -157,13 +157,15 @@ namespace ProyectoSO2
                     DialogResult result = MessageBox.Show("El tamaño de la partición no puede ser negativo. ¿Desea cambiarlo a positivo?", "Error de datos de entrada", MessageBoxButtons.OKCancel, MessageBoxIcon.Error);
                     if (result == DialogResult.OK)
                     {
-                        dgvParticiones.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = Math.Abs(numero);
+                        tabParticiones.Rows[e.RowIndex][e.ColumnIndex] = Math.Abs(numero);
+                        dgvParticiones.Refresh();
                     }
                     else
                     {
                         dgvParticiones.CancelEdit();
                     }
                 }
+                
             }
         }
 
@@ -183,6 +185,8 @@ namespace ProyectoSO2
                 for (int i = 0; i < int.Parse(txtNParticiones.Text); i++)
                 {
                     int n = int.Parse(tabParticiones.Rows[i]["Tamaño"].ToString());
+                    if (n < 0)
+                        n = n * -1;
                     totalingresado += +n;
                 }
                 
