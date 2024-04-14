@@ -96,7 +96,7 @@ namespace entornoPruebaClasesProyecto
                     proceso.ParticionID = -1;//sacar proceso
                     ProcesosList[i] = proceso;                    
                 }
-                if(proceso.Estado != 3)
+                if(proceso.Estado != 3 && particionesLibres()!=ParticionesList.Count)
                 {//el proceso está en memoria y se seguirá ejecutando
                     proceso.TiempoTranscurrido++;
                 }
