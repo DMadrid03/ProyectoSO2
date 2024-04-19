@@ -234,9 +234,3 @@ namespace ProyectoSO2
     }
 }
 
-
-//va haber un hilo y si hay un proceso que se 
-//    se va a revisar si se puede sacr un hilo
-//    después revisar si se puede meter otro
-
-//    Actualizar estados

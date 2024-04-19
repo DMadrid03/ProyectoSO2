@@ -3,20 +3,24 @@
   "WorkspaceRootPath": "D:\\Documentos\\2024 Universidad\\Sistemas Operativos II\\Unidad III\\ProyectoSO2\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{36C88321-67EF-40E0-A2AB-569B13B5CD2C}|ProyectoSO2\\ProyectoSO2.csproj|D:\\Documentos\\2024 Universidad\\Sistemas Operativos II\\Unidad III\\ProyectoSO2\\proyectoso2\\gestor.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{36C88321-67EF-40E0-A2AB-569B13B5CD2C}|ProyectoSO2\\ProyectoSO2.csproj|solutionrelative:proyectoso2\\gestor.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{36C88321-67EF-40E0-A2AB-569B13B5CD2C}|ProyectoSO2\\ProyectoSO2.csproj|d:\\documentos\\2024 universidad\\sistemas operativos ii\\unidad iii\\proyectoso2\\proyectoso2\\frmsimulacion.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{36C88321-67EF-40E0-A2AB-569B13B5CD2C}|ProyectoSO2\\ProyectoSO2.csproj|solutionrelative:proyectoso2\\frmsimulacion.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{36C88321-67EF-40E0-A2AB-569B13B5CD2C}|ProyectoSO2\\ProyectoSO2.csproj|D:\\Documentos\\2024 Universidad\\Sistemas Operativos II\\Unidad III\\ProyectoSO2\\proyectoso2\\frminfo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{36C88321-67EF-40E0-A2AB-569B13B5CD2C}|ProyectoSO2\\ProyectoSO2.csproj|solutionrelative:proyectoso2\\frminfo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{36C88321-67EF-40E0-A2AB-569B13B5CD2C}|ProyectoSO2\\ProyectoSO2.csproj|D:\\Documentos\\2024 Universidad\\Sistemas Operativos II\\Unidad III\\ProyectoSO2\\proyectoso2\\frminfo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
       "RelativeMoniker": "D:0:0:{36C88321-67EF-40E0-A2AB-569B13B5CD2C}|ProyectoSO2\\ProyectoSO2.csproj|solutionrelative:proyectoso2\\frminfo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{36C88321-67EF-40E0-A2AB-569B13B5CD2C}|ProyectoSO2\\ProyectoSO2.csproj|D:\\Documentos\\2024 Universidad\\Sistemas Operativos II\\Unidad III\\ProyectoSO2\\proyectoso2\\frmsimulacion.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{36C88321-67EF-40E0-A2AB-569B13B5CD2C}|ProyectoSO2\\ProyectoSO2.csproj|solutionrelative:proyectoso2\\frmsimulacion.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{36C88321-67EF-40E0-A2AB-569B13B5CD2C}|ProyectoSO2\\ProyectoSO2.csproj|d:\\documentos\\2024 universidad\\sistemas operativos ii\\unidad iii\\proyectoso2\\proyectoso2\\gestor.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{36C88321-67EF-40E0-A2AB-569B13B5CD2C}|ProyectoSO2\\ProyectoSO2.csproj|solutionrelative:proyectoso2\\gestor.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{36C88321-67EF-40E0-A2AB-569B13B5CD2C}|ProyectoSO2\\ProyectoSO2.csproj|d:\\documentos\\2024 universidad\\sistemas operativos ii\\unidad iii\\proyectoso2\\proyectoso2\\particion.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{36C88321-67EF-40E0-A2AB-569B13B5CD2C}|ProyectoSO2\\ProyectoSO2.csproj|solutionrelative:proyectoso2\\particion.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -30,49 +34,64 @@
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 3,
+              "Title": "Gestor.cs",
+              "DocumentMoniker": "D:\\Documentos\\2024 Universidad\\Sistemas Operativos II\\Unidad III\\ProyectoSO2\\ProyectoSO2\\Gestor.cs",
+              "RelativeDocumentMoniker": "ProyectoSO2\\Gestor.cs",
+              "ToolTip": "D:\\Documentos\\2024 Universidad\\Sistemas Operativos II\\Unidad III\\ProyectoSO2\\ProyectoSO2\\Gestor.cs",
+              "RelativeToolTip": "ProyectoSO2\\Gestor.cs",
+              "ViewState": "AQIAAEIAAABAMzMzMzMwwGcAAAAuAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-04-15T16:19:20.147Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "Particion.cs",
+              "DocumentMoniker": "D:\\Documentos\\2024 Universidad\\Sistemas Operativos II\\Unidad III\\ProyectoSO2\\ProyectoSO2\\Particion.cs",
+              "RelativeDocumentMoniker": "ProyectoSO2\\Particion.cs",
+              "ToolTip": "D:\\Documentos\\2024 Universidad\\Sistemas Operativos II\\Unidad III\\ProyectoSO2\\ProyectoSO2\\Particion.cs",
+              "RelativeToolTip": "ProyectoSO2\\Particion.cs",
+              "ViewState": "AQIAAAEAAAAwMzMzMzMjwAsAAAAgAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-04-15T16:13:19.11Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
               "Title": "frmInfo.cs",
               "DocumentMoniker": "D:\\Documentos\\2024 Universidad\\Sistemas Operativos II\\Unidad III\\ProyectoSO2\\ProyectoSO2\\frmInfo.cs",
               "RelativeDocumentMoniker": "ProyectoSO2\\frmInfo.cs",
               "ToolTip": "D:\\Documentos\\2024 Universidad\\Sistemas Operativos II\\Unidad III\\ProyectoSO2\\ProyectoSO2\\frmInfo.cs",
               "RelativeToolTip": "ProyectoSO2\\frmInfo.cs",
-              "ViewState": "AQIAAJIAAADAzMzMzMwYwJsAAAARAAAA",
+              "ViewState": "AQIAAFsAAAAAmZmZmZkpwG4AAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-04-08T00:00:05.08Z"
+              "WhenOpened": "2024-04-08T00:00:05.08Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 1,
               "Title": "frmInfo.cs [Dise\u00F1o]",
               "DocumentMoniker": "D:\\Documentos\\2024 Universidad\\Sistemas Operativos II\\Unidad III\\ProyectoSO2\\ProyectoSO2\\frmInfo.cs",
               "RelativeDocumentMoniker": "ProyectoSO2\\frmInfo.cs",
               "ToolTip": "D:\\Documentos\\2024 Universidad\\Sistemas Operativos II\\Unidad III\\ProyectoSO2\\ProyectoSO2\\frmInfo.cs [Dise\u00F1o]",
               "RelativeToolTip": "ProyectoSO2\\frmInfo.cs [Dise\u00F1o]",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-04-08T00:00:02.315Z"
+              "WhenOpened": "2024-04-08T00:00:02.315Z",
+              "EditorCaption": " [Dise\u00F1o]"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "Gestor.cs",
-              "DocumentMoniker": "D:\\Documentos\\2024 Universidad\\Sistemas Operativos II\\Unidad III\\ProyectoSO2\\ProyectoSO2\\Gestor.cs",
-              "RelativeDocumentMoniker": "ProyectoSO2\\Gestor.cs",
-              "ToolTip": "D:\\Documentos\\2024 Universidad\\Sistemas Operativos II\\Unidad III\\ProyectoSO2\\ProyectoSO2\\Gestor.cs",
-              "RelativeToolTip": "ProyectoSO2\\Gestor.cs",
-              "ViewState": "AQIAAJAAAAAAAAAAAAAqwJ4AAABAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-04-06T15:37:43.181Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
               "Title": "frmSimulacion.cs",
               "DocumentMoniker": "D:\\Documentos\\2024 Universidad\\Sistemas Operativos II\\Unidad III\\ProyectoSO2\\ProyectoSO2\\frmSimulacion.cs",
               "RelativeDocumentMoniker": "ProyectoSO2\\frmSimulacion.cs",
               "ToolTip": "D:\\Documentos\\2024 Universidad\\Sistemas Operativos II\\Unidad III\\ProyectoSO2\\ProyectoSO2\\frmSimulacion.cs",
               "RelativeToolTip": "ProyectoSO2\\frmSimulacion.cs",
-              "ViewState": "AQIAAAgBAAAAAAAAAAAAABMBAAAQAAAA",
+              "ViewState": "AQIAABABAAAAaGZmZmYmwAYBAAAcAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-03-13T00:29:47.453Z",
               "EditorCaption": ""

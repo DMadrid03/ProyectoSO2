@@ -241,7 +241,7 @@
             Controls.Add(label2);
             Controls.Add(label1);
             Name = "frmInfo";
-            Text = "Form1";
+            Text = "Información inicial";
             Load += frmInfo_Load;
             ((System.ComponentModel.ISupportInitialize)dgvParticiones).EndInit();
             ResumeLayout(false);
