@@ -91,7 +91,7 @@
             // 
             btnIniciar.Location = new Point(857, 105);
             btnIniciar.Name = "btnIniciar";
-            btnIniciar.Size = new Size(110, 48);
+            btnIniciar.Size = new Size(110, 33);
             btnIniciar.TabIndex = 5;
             btnIniciar.Text = "Iniciar Simulación";
             btnIniciar.UseVisualStyleBackColor = true;
@@ -101,7 +101,7 @@
             // 
             panMemoria.Location = new Point(26, 369);
             panMemoria.Name = "panMemoria";
-            panMemoria.Size = new Size(735, 348);
+            panMemoria.Size = new Size(825, 348);
             panMemoria.TabIndex = 6;
             // 
             // vScrollBar1
@@ -114,9 +114,9 @@
             // 
             // btnDetener
             // 
-            btnDetener.Location = new Point(777, 369);
+            btnDetener.Location = new Point(872, 369);
             btnDetener.Name = "btnDetener";
-            btnDetener.Size = new Size(152, 69);
+            btnDetener.Size = new Size(95, 82);
             btnDetener.TabIndex = 7;
             btnDetener.Text = "Detener Simulación";
             btnDetener.UseVisualStyleBackColor = true;

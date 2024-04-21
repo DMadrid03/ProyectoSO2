@@ -96,10 +96,12 @@ namespace entornoPruebaClasesProyecto
                     proceso.ParticionID = -1;//sacar proceso
                     ProcesosList[i] = proceso;                    
                 }
-                if(proceso.Estado != 3 && particionesLibres()!=ParticionesList.Count)
+                int pl = particionesLibres();
+                if (proceso.Estado != 3 && pl != ParticionesList.Count)
                 {//el proceso está en memoria y se seguirá ejecutando
                     proceso.TiempoTranscurrido++;
                 }
+                
                 if (proceso.ParticionID == -1)
                     pt++;//conteo de procesos terminados
             }
@@ -141,7 +143,7 @@ namespace entornoPruebaClasesProyecto
                     if(particionIndex != -1)
                     {//ese proceso encontró una particion donde ubicarse
                         proc.ParticionID = proceso.ParticionID;//asignar el proceso a esa partición
-                        proc.TiempoInicio = proceso.TiempoTranscurrido - 1;//guardar el segundo en que ese proceso entró a memoria
+                        proc.TiempoInicio = proceso.TiempoTranscurrido ;//guardar el segundo en que ese proceso entró a memoria
                         ParticionesList[particionIndex].ocupado = true; //marcar la partición como ocupada
                     }
                     

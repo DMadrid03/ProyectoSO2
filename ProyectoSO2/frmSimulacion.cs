@@ -310,12 +310,12 @@ namespace ProyectoSO2
         }
         private void actualizarPanel(int particionID, Proceso proceso)
         {//pone la información del proceso en su panel correlativo que representa su partición.
-            float usado = (proceso.MemoriaRequerida / particionesList[particionID].size) * 100;
+            float usado = (proceso.MemoriaRequerida * 100 )/ particionesList[particionID].size ;
             panMemoria.Invoke((MethodInvoker)delegate
             {
                 panMemoria.Controls[particionID].BackColor = Color.Yellow;
                 panMemoria.Controls[particionID].Controls[0].Text = "Particion " + particionID + "    Aloja proceso: " +
-                proceso.Nombre +
+                proceso.Nombre + " (" + proceso.MemoriaRequerida + ")" +
                 "       Usado: " + usado + 
                 "%          tamaño: " + particionesList[particionID].size + "      Tiempo: " + proceso.TiempoTranscurrido;
             });
@@ -331,7 +331,7 @@ namespace ProyectoSO2
                     panMemoria.Invoke((MethodInvoker)delegate
                     {
                         panMemoria.Controls[i].BackColor = Color.Green;
-                        panMemoria.Controls[i].Controls[0].Text = "Particion " + i + " Libre";
+                        panMemoria.Controls[i].Controls[0].Text = "Particion " + i + " Libre" +"       Tamaño: " + particionesList[i].size;
                     });
                 }
             }
